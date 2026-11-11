@@ -1412,8 +1412,8 @@ if(sbtn)sbtn.addEventListener('click',async function(){
           sendAutoReply(); okUI(true); return;
         }catch(e2){console.error('EmailJS fallback error:',e2);}
       }
-      const detail=msg?' ['+msg+']':'';
-      err&&(err.textContent=tr('✗ Erreur','✗ Error')+detail+tr('. Écrivez à contact@ecologicengineering.com','. Please write to contact@ecologicengineering.com'),err.classList.add('show'));
+      // Le détail technique reste dans la console (ci-dessus) ; le visiteur voit un message simple.
+      err&&(err.textContent=tr('✗ Votre message n\'a pas pu être envoyé. Réessayez dans quelques minutes ou écrivez-nous directement à contact@ecologicengineering.com','✗ Your message could not be sent. Please try again in a few minutes or write to us directly at contact@ecologicengineering.com'),err.classList.add('show'));
       this.textContent=tr('Envoyer →','Send →'); this.disabled=false;
     }
   }else{
