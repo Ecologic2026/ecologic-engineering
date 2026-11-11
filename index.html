@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; media-src blob: https://videos.pexels.com; connect-src https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com; frame-src https://www.google.com https://recaptcha.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; media-src blob: https://videos.pexels.com; connect-src https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="description" content="Ecologic Engineering — Bureau d'études indépendant en géotechnique (missions G1-G5) et génie civil structurel (Eurocodes). Interaction sol-structure, fondations, calculs de structures. France, Europe, Afrique &amp; Moyen-Orient.">
 <meta name="keywords" content="bureau d'études géotechnique, génie civil, interaction sol-structure, missions G1 G5, calcul de structures, Eurocodes, fondations, France, Europe, Afrique, Moyen-Orient, NF P 94-500, RPA, CBA, logiciels géotechniques, formation ingénierie">
@@ -340,6 +340,7 @@ a{color:var(--green);text-decoration:none;}
 .fsuc span{font-size:30px;display:block;margin-bottom:8px;}
 .fsuc h4{color:#166534;font-family:var(--head);margin-bottom:4px;}
 .fsuc p{font-size:13px;color:#15803D;margin:0;}
+.ee-captcha{margin:4px 0 8px;}
 .ferr{display:none;background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;padding:14px;text-align:center;margin-top:10px;font-size:13px;color:#B91C1C;}
 .ferr.show{display:block;}
 
@@ -1032,7 +1033,7 @@ a{color:var(--green);text-decoration:none;}
       <div class="cform rev d2">
         <h3>Prise de contact</h3>
         <form id="contactForm" onsubmit="return false" enctype="multipart/form-data">
-        <input type="hidden" name="from_name" id="f-fullname"><input type="hidden" name="reply_to" id="f-replyto">
+        <input type="hidden" name="from_name" id="f-fullname"><input type="hidden" name="reply_to" id="f-replyto"><input type="hidden" name="first_name" id="f-arfirst"><input type="hidden" name="to_name" id="f-toname"><input type="hidden" name="to_email" id="f-toemail">
         <!-- Anti-spam : champ leurre invisible, à laisser vide (les robots le remplissent) -->
         <div class="hp-wrap" aria-hidden="true"><label for="f-website">Ne pas remplir</label><input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
         <div class="fg"><label>Vous êtes *</label>
@@ -1043,7 +1044,7 @@ a{color:var(--green);text-decoration:none;}
         </div>
         <div id="f-part">
           <div class="frow">
-            <div class="fg"><label>Prénom *</label><input type="text" id="f-prenom" name="first_name" placeholder="Jean"></div>
+            <div class="fg"><label>Prénom *</label><input type="text" id="f-prenom" name="prenom" placeholder="Jean"></div>
             <div class="fg"><label>Nom *</label><input type="text" id="f-nom" name="last_name" placeholder="Dupont"></div>
           </div>
         </div>
@@ -1069,6 +1070,7 @@ a{color:var(--green);text-decoration:none;}
           <input type="file" id="f-files" name="attachments" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.dwg,.dxf,.jpg,.jpeg,.png,.zip" style="display:none">
           <div class="flist" id="f-list"></div>
         </div>
+        <div class="ee-captcha" id="ee-captcha"></div>
         <button class="btn-send" id="submitBtn" type="button">Envoyer →</button>
         <div class="fsuc" id="form-success"><span>✅</span><h4>Message envoyé !</h4><p>Un email de confirmation vous a été adressé. Nous vous répondrons sous 48h.</p></div>
         <div class="ferr" id="form-error"></div>
@@ -1315,7 +1317,24 @@ window.addEventListener('scroll',()=>{
 const PAGE_T=Date.now(); // anti-spam : horodatage du chargement de la page
 const EJSCFG={pk:'_uTx4Wf8VjaIPtEb5',sid:'service_eko9e1g',tid:'template_szsy5od',rtid:'template_cv0dogf'};
 const EJSOK=EJSCFG.pk!=='VOTRE_CLE_PUBLIQUE';
-const EJSAR=EJSCFG.rtid&&EJSCFG.rtid.indexOf('VOTRE_')!==0; // auto-réponse activée si template configuré
+const EJSAR=EJSCFG.rtid&&EJSCFG.rtid.indexOf('VOTRE_')!==0; // modèle d'auto-réponse (envoyé par EmailJS via le modèle lié)
+
+// Anti-spam 3 : reCAPTCHA v2 (case « Je ne suis pas un robot »), chargé seulement quand le visiteur
+// commence à remplir le formulaire. EmailJS vérifie la réponse (clé secrète dans les réglages du modèle)
+// et envoie lui-même l'email automatique (modèle « Auto-Reply » lié au modèle « Contact Us »).
+const RC_KEY='6LdUfBsuAAAAANufKjc6go569xkXDuSkebxdozx5';
+let RC_WID=null,RC_LOADING=false,RC_FAILED=false,RC_RETRY_NOFILES=false;
+function rcLoad(){
+  if(RC_LOADING||!RC_KEY)return; RC_LOADING=true;
+  window.eeRcReady=function(){try{RC_WID=grecaptcha.render('ee-captcha',{sitekey:RC_KEY});}catch(e){RC_FAILED=true;console.warn('reCAPTCHA :',e);}};
+  const s=document.createElement('script');
+  s.src='https://www.google.com/recaptcha/api.js?onload=eeRcReady&render=explicit&hl='+tr('fr','en');
+  s.async=true; s.onerror=function(){RC_FAILED=true;console.warn('reCAPTCHA non chargé');};
+  document.head.appendChild(s);
+}
+function rcToken(){try{return (RC_WID!==null&&window.grecaptcha)?grecaptcha.getResponse(RC_WID):'';}catch(e){return '';}}
+function rcReset(){try{if(RC_WID!==null&&window.grecaptcha)grecaptcha.reset(RC_WID);}catch(e){}}
+(function(){const f=$id('contactForm');if(f)f.addEventListener('focusin',rcLoad,{once:true});})();
 window.addEventListener('load',function(){if(EJSOK&&typeof emailjs!=='undefined')emailjs.init({publicKey:EJSCFG.pk});});
 
 // ---- Pièces jointes (formulaire contact) ----
@@ -1376,8 +1395,15 @@ if(sbtn)sbtn.addEventListener('click',async function(){
   if(!/^[+0-9][0-9 .()\/-]{5,19}$/.test(te)){err&&(err.textContent=tr('⚠ Téléphone invalide.','⚠ Invalid phone number.'),err.classList.add('show'));return;}
   if(!/^[^@]+@[^@]+\.[^@]+$/.test(em)){err&&(err.textContent=tr('⚠ Email invalide.','⚠ Invalid email address.'),err.classList.add('show'));return;}
   if(selFiles.reduce((s,f)=>s+f.size,0)>ATT_MAX){err&&(err.textContent=tr('⚠ Pièces jointes : 2 Mo maximum au total.','⚠ Attachments: 2 MB maximum in total.'),err.classList.add('show'));return;}
+  const useEJ=EJSOK&&typeof emailjs!=='undefined'&&!(RC_KEY&&RC_FAILED);
+  let token='';
+  if(useEJ&&RC_KEY){
+    if(RC_WID===null){rcLoad();err&&(err.textContent=tr('⚠ Cochez la case « Je ne suis pas un robot » au-dessus du bouton (elle s\'affiche en quelques secondes), puis cliquez sur Envoyer.','⚠ Tick the “I\'m not a robot” box above the button (it appears within a few seconds), then click Send.'),err.classList.add('show'));return;}
+    token=rcToken();
+    if(!token){err&&(err.textContent=tr('⚠ Cochez la case « Je ne suis pas un robot » avant d\'envoyer.','⚠ Please tick the “I\'m not a robot” box before sending.'),err.classList.add('show'));return;}
+  }
   this.textContent=tr('Envoi en cours…','Sending…'); this.disabled=true;
-  if(EJSOK&&typeof emailjs!=='undefined'){
+  if(useEJ){
     const btn=this;
     const okUI=warn=>{
       btn.textContent=tr('✓ Envoyé !','✓ Sent!'); btn.classList.add('ok');
@@ -1390,27 +1416,28 @@ if(sbtn)sbtn.addEventListener('click',async function(){
       selFiles=[]; syncFiles();
       setTimeout(()=>{btn.textContent=tr('Envoyer →','Send →');btn.classList.remove('ok');btn.disabled=false;},5000);
     };
-    const sendAutoReply=()=>{if(EJSAR){emailjs.send(EJSCFG.sid,EJSCFG.rtid,{to_email:em,to_name:cname,first_name:isSoc?so:pr,mission:mi||'votre demande'}).catch(e=>console.warn('Auto-réponse non envoyée:',e));}};
     const fnames=selFiles.map(f=>f.name).join(', ');
+    const noFiles=RC_RETRY_NOFILES&&selFiles.length>0;
+    const base={from_name:cname,from_email:em,client_type:isSoc?'Société':'Particulier',phone:te,company:isSoc?so:'—',mission:mi||'—',location:li||'—',reply_to:em,to_email:em,to_name:cname,first_name:isSoc?so:pr,'g-recaptcha-response':token};
     try{
       $id('f-fullname').value=cname; $id('f-replyto').value=em;
-      if(selFiles.length){
-        // Envoi avec pièces jointes (nécessite l'attachment "attachments" déclaré dans le template EmailJS + plan compatible)
+      $id('f-arfirst').value=isSoc?so:pr; $id('f-toname').value=cname; $id('f-toemail').value=em;
+      if(selFiles.length&&!noFiles){
+        // Envoi avec pièces jointes (la réponse CAPTCHA du formulaire est jointe automatiquement)
         await emailjs.sendForm(EJSCFG.sid,EJSCFG.tid,'#contactForm');
       }else{
-        await emailjs.send(EJSCFG.sid,EJSCFG.tid,{from_name:cname,from_email:em,client_type:isSoc?'Société':'Particulier',phone:te,company:isSoc?so:'—',mission:mi||'—',location:li||'—',message:de,reply_to:em});
+        await emailjs.send(EJSCFG.sid,EJSCFG.tid,Object.assign({},base,{message:noFiles?de+'\n\n[⚠ Le client a tenté de joindre : '+fnames+' — fichiers trop lourds pour le formulaire, non transmis.]':de}));
       }
-      sendAutoReply(); okUI(false);
+      rcReset(); RC_RETRY_NOFILES=false; okUI(noFiles);
     }catch(e){
       const msg=(e&&(e.text||e.message))||'';
       console.error('EmailJS error:',e);
-      // Repli : si EmailJS refuse les fichiers (limite variables 50Kb / attachments non activés),
-      // on renvoie le message SANS les fichiers pour ne perdre aucune demande client.
-      if(selFiles.length&&/variables size limit|attachment|50kb/i.test(msg)){
-        try{
-          await emailjs.send(EJSCFG.sid,EJSCFG.tid,{from_name:cname,from_email:em,client_type:isSoc?'Société':'Particulier',phone:te,company:isSoc?so:'—',mission:mi||'—',location:li||'—',message:de+'\n\n[⚠ Le client a tenté de joindre : '+fnames+' — fichiers non transmis, pièces jointes non activées côté EmailJS.]',reply_to:em});
-          sendAutoReply(); okUI(true); return;
-        }catch(e2){console.error('EmailJS fallback error:',e2);}
+      rcReset(); // une réponse CAPTCHA ne sert qu'une fois
+      // Fichiers refusés par EmailJS (limite de taille du plan) : on propose de renvoyer sans les fichiers
+      if(selFiles.length&&!noFiles&&/variables size limit|attachment|50kb/i.test(msg)){
+        RC_RETRY_NOFILES=true;
+        err&&(err.textContent=tr('⚠ Les pièces jointes n\'ont pas pu être transmises (fichiers trop lourds pour le formulaire). Cochez à nouveau la case « Je ne suis pas un robot » et cliquez sur Envoyer : votre message partira sans les fichiers, que vous pourrez ensuite envoyer à contact@ecologicengineering.com.','⚠ The attachments could not be sent (files too large for the form). Tick the “I\'m not a robot” box again and click Send: your message will be sent without the files, which you can then email to contact@ecologicengineering.com.'),err.classList.add('show'));
+        this.textContent=tr('Envoyer →','Send →'); this.disabled=false; return;
       }
       // Le détail technique reste dans la console (ci-dessus) ; le visiteur voit un message simple.
       err&&(err.textContent=tr('✗ Votre message n\'a pas pu être envoyé. Réessayez dans quelques minutes ou écrivez-nous directement à contact@ecologicengineering.com','✗ Your message could not be sent. Please try again in a few minutes or write to us directly at contact@ecologicengineering.com'),err.classList.add('show'));
@@ -1812,6 +1839,7 @@ if(LANG==='en'){applyLang('en');document.addEventListener('DOMContentLoaded',()=
       <li><strong>EmailJS</strong> — acheminement des messages du formulaire de contact et de l'email de confirmation</li>
       <li><strong>GitHub, Inc.</strong> (GitHub Pages) — hébergement du site</li>
       <li><strong>Google Fonts</strong>, <strong>jsDelivr</strong> et <strong>Pexels</strong> — chargement des polices, bibliothèques et vidéos d'illustration (votre adresse IP est transmise à ces services lors du chargement des pages)</li>
+      <li><strong>Google reCAPTCHA</strong> — protection du formulaire de contact contre les envois automatisés ; ce service n'est chargé que lorsque vous commencez à remplir le formulaire, et votre adresse IP ainsi que des informations techniques sur votre navigateur sont alors transmises à Google</li>
     </ul>
 
     <h3>6. Transferts hors Union européenne</h3>
