@@ -1121,7 +1121,7 @@ a{color:var(--green);text-decoration:none;}
       <div class="fcol"><h5>Contact</h5>
         <span id="footer-email">contact@ecologicengineering.com</span>
         <span id="footer-phone" style="display:none"></span>
-        <a href="https://linkedin.com" id="footer-linkedin" target="_blank" rel="noopener">🔗 LinkedIn</a>
+        <a href="#" id="footer-linkedin" target="_blank" rel="noopener" style="display:none">🔗 LinkedIn</a>
       </div>
     </div>
     <div class="foot-bot">
@@ -1140,7 +1140,7 @@ a{color:var(--green);text-decoration:none;}
 
 // @DEFAULTS_START
 const DEFAULTS={
-  contact:{email:'contact@ecologicengineering.com',phone:'',address:'',zones:'France · Europe · Afrique · Moyen-Orient',linkedin:'https://linkedin.com',response:'Sous 48 h ouvrées'},
+  contact:{email:'contact@ecologicengineering.com',phone:'',address:'',zones:'France · Europe · Afrique · Moyen-Orient',linkedin:'',response:'Sous 48 h ouvrées'},
   stats:[{v:15,l:"Années d'expérience combinée"},{v:8,l:'Secteurs couverts'},{v:4,l:'Domaines d\'expertise'},{v:48,l:"Heures réponse max"},{v:6,l:'Logiciels maîtrisés'}],
   projects:[],
   articles:[],
@@ -1201,7 +1201,7 @@ function renderContact(){
   txt('contact-phone',c.phone); txt('footer-phone',c.phone);
   const cp=$id('cdet-phone'); if(cp)cp.style.display=c.phone?'':'none';
   const fp=$id('footer-phone'); if(fp)fp.style.display=c.phone?'':'none';
-  const li=$id('footer-linkedin'); if(li)li.href=c.linkedin||'#';
+  const li=$id('footer-linkedin'); if(li){li.href=c.linkedin||'#';li.style.display=c.linkedin?'':'none';} // masqué tant que la page LinkedIn n'existe pas
 }
 
 function renderStats(){
