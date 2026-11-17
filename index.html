@@ -1398,12 +1398,12 @@ if(sbtn)sbtn.addEventListener('click',async function(){
   // Anti-spam 2 : envoi trop rapide après le chargement de la page (comportement non humain)
   if(Date.now()-PAGE_T<4000){err&&(err.textContent=tr('⚠ Merci de patienter un instant avant d\'envoyer.','⚠ Please wait a moment before sending.'),err.classList.add('show'));return;}
   if(isSoc){
-    if(!so||!te||!em||!mi||!de){err&&(err.textContent=tr('⚠ Remplissez : Nom de la société, Téléphone, Email, Sujet et Description.','⚠ Please fill in: Company name, Phone, Email, Subject and Description.'),err.classList.add('show'));return;}
+    if(!so||!te||!em||!mi||!de){err&&(err.textContent=tr('⚠ Remplissez : Nom de la société, Téléphone, E-mail, Sujet et Description.','⚠ Please fill in: Company name, Phone, Email, Subject and Description.'),err.classList.add('show'));return;}
   }else{
-    if(!pr||!no||!te||!em||!mi||!de){err&&(err.textContent=tr('⚠ Remplissez : Prénom, Nom, Téléphone, Email, Sujet et Description.','⚠ Please fill in: First name, Last name, Phone, Email, Subject and Description.'),err.classList.add('show'));return;}
+    if(!pr||!no||!te||!em||!mi||!de){err&&(err.textContent=tr('⚠ Remplissez : Prénom, Nom, Téléphone, E-mail, Sujet et Description.','⚠ Please fill in: First name, Last name, Phone, Email, Subject and Description.'),err.classList.add('show'));return;}
   }
   if(!/^[+0-9][0-9 .()\/-]{5,19}$/.test(te)){err&&(err.textContent=tr('⚠ Téléphone invalide.','⚠ Invalid phone number.'),err.classList.add('show'));return;}
-  if(!/^[^@]+@[^@]+\.[^@]+$/.test(em)){err&&(err.textContent=tr('⚠ Email invalide.','⚠ Invalid email address.'),err.classList.add('show'));return;}
+  if(!/^[^@]+@[^@]+\.[^@]+$/.test(em)){err&&(err.textContent=tr('⚠ E-mail invalide.','⚠ Invalid email address.'),err.classList.add('show'));return;}
   if(selFiles.reduce((s,f)=>s+f.size,0)>ATT_MAX){err&&(err.textContent=tr('⚠ Pièces jointes : 2 Mo maximum au total.','⚠ Attachments: 2 MB maximum in total.'),err.classList.add('show'));return;}
   const useEJ=EJSOK&&typeof emailjs!=='undefined'&&!(RC_KEY&&RC_FAILED);
   let token='';
@@ -1419,7 +1419,7 @@ if(sbtn)sbtn.addEventListener('click',async function(){
       btn.textContent=tr('✓ Envoyé !','✓ Sent!'); btn.classList.add('ok');
       if(suc){suc.classList.add('show');
         const p=suc.querySelector('p');
-        if(p){p.innerHTML=warn?tr('Votre message a bien été envoyé, mais <b>les pièces jointes n\'ont pas pu être transmises</b>. Merci de les envoyer par email à <b>contact@ecologicengineering.com</b> en rappelant votre nom.','Your message has been sent, but <b>the attachments could not be transmitted</b>. Please email them to <b>contact@ecologicengineering.com</b>, mentioning your name.'):tr('Un email de confirmation vous a été adressé. Nous vous répondrons sous 48h.','A confirmation email has been sent to you. We will reply within 48h.');}}
+        if(p){p.innerHTML=warn?tr('Votre message a bien été envoyé, mais <b>les pièces jointes n\'ont pas pu être transmises</b>. Merci de les envoyer par e-mail à <b>contact@ecologicengineering.com</b> en rappelant votre nom.','Your message has been sent, but <b>the attachments could not be transmitted</b>. Please email them to <b>contact@ecologicengineering.com</b>, mentioning your name.'):tr('Un e-mail de confirmation vous a été adressé. Nous vous répondons sous 48 h ouvrées.','A confirmation email has been sent to you. We reply within 48 working hours.');}}
       ['f-prenom','f-nom','f-email','f-tel','f-societe','f-lieu','f-desc'].forEach(id=>{const e=$id(id);if(e)e.value='';});
       $id('f-mission').value='';
       if(ftype){ftype.value='Particulier';syncType();}
