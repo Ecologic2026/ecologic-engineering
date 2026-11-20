@@ -83,6 +83,7 @@ a{color:var(--green);text-decoration:none;}
 .nav a.cta.active{background:var(--orange);}
 .mbtn{display:none;background:none;border:none;cursor:pointer;padding:8px;color:#fff;flex-direction:column;gap:5px;}
 .mbtn span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;}
+@media(max-width:1099px){.nav{display:none;}.mbtn{display:flex;}}
 .mnav{display:none;background:#0A1810;padding:12px 24px 20px;}
 .mnav.open{display:block;}
 .mnav a{display:block;color:rgba(255,255,255,.8);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05);font-family:var(--head);font-weight:600;font-size:14px;}
@@ -662,11 +663,12 @@ a{color:var(--green);text-decoration:none;}
   </div>
 </div></a>
       <nav class="nav">
-        <a href="#marches">Secteurs</a>
+        <a href="#about">À propos</a>
         <a href="#expertise">Expertises</a>
         <a href="#services">Prestations</a>
+        <a href="#rse">Engagements</a>
+        <a href="#marches">Secteurs</a>
         <a href="#blog">Publications</a>
-        <a href="#about">À propos</a>
         <a href="#contact" class="cta">Contact →</a>
         <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
       </nav>
@@ -677,11 +679,12 @@ a{color:var(--green);text-decoration:none;}
   </div>
   <div class="mnav" id="mnav">
     <button class="lang-btn" style="margin:10px 0 4px;" onclick="toggleLang()">FR / EN</button>
-    <a href="#marches">Secteurs</a>
+    <a href="#about">À propos</a>
     <a href="#expertise">Expertises</a>
     <a href="#services">Prestations</a>
+    <a href="#rse">Engagements</a>
+    <a href="#marches">Secteurs</a>
     <a href="#blog">Publications</a>
-    <a href="#about">À propos</a>
     <a href="#contact">Contact</a>
   </div>
 </header>
@@ -760,21 +763,26 @@ a{color:var(--green);text-decoration:none;}
 
 <!-- STATS : supprimée en version initiale -->
 
-<!-- MARCHÉS -->
-<section class="sec" id="marches">
+<!-- ABOUT -->
+<section class="sec" id="about">
   <div class="wrap">
-    <div class="sh rev">
-      <div class="stag">Secteurs d'activité</div>
-      <h2>Une même exigence, quel que soit l'ouvrage</h2>
-      <p>De la maison individuelle à l'ouvrage d'art, chaque projet repose sur le même principe : étudier le sol et l'ouvrage ensemble.</p>
-    </div>
-    <div class="marches rev">
-      <div class="mcard"><span class="mico">🏠</span><h4>Résidentiel et collectif</h4><p>Maisons individuelles, immeubles collectifs, résidences, logements sociaux.</p></div>
-      <div class="mcard"><span class="mico">🏢</span><h4>Tertiaire et commercial</h4><p>Bureaux, hôtels, commerces, équipements publics.</p></div>
-      <div class="mcard"><span class="mico">🏭</span><h4>Industrie et logistique</h4><p>Entrepôts, sites industriels, plateformes logistiques, fondations d'équipements lourds.</p></div>
-      <div class="mcard"><span class="mico">🌉</span><h4>Infrastructures et ouvrages d'art</h4><p>Ponts et passerelles, murs de soutènement, ouvrages d'art courants.</p></div>
-      <div class="mcard"><span class="mico">💨</span><h4>Énergies renouvelables</h4><p>Fondations d'éoliennes, centrales photovoltaïques au sol, stockage d'énergie.</p></div>
-      <div class="mcard"><span class="mico">🏛️</span><h4>Bâti existant et réhabilitation</h4><p>Diagnostic, renforcement et reprise en sous-œuvre de bâtiments existants.</p></div>
+    <div class="about-in">
+      <div>
+        <div class="stag">Notre identité</div>
+        <h2 style="margin-bottom:20px;">Une ingénierie rigoureuse, sobre et indépendante</h2>
+        <p><strong>Ecologic Engineering</strong> est né d'une conviction : la maîtrise de l'interaction entre le sol et la structure est la clé de voûte d'un projet de construction réussi.</p>
+        <p>Nous pensons la géotechnique et la structure ensemble, dès la première esquisse. Cette approche se traduit par des économies mesurables, des ouvrages plus sûrs et des calculs que l'on peut retracer, des années après. Notre ambition : être pour nos clients un partenaire technique de confiance, exigeant et accessible.</p>
+        <p>Notre nom reflète notre double engagement : l'<strong style="color:var(--green);">écologie</strong> — construire durablement — et la <strong style="color:var(--green);">logique</strong> — la rigueur scientifique de l'ingénieur.</p>
+      </div>
+      <div>
+        <div class="stag">Nos engagements</div>
+        <div class="vals" style="margin-top:0;">
+          <div class="vcard"><span class="vico">🎯</span><h4>Rigueur</h4><p>Chaque calcul est vérifié, chaque hypothèse est tracée, chaque note est relue avant d'être signée.</p></div>
+          <div class="vcard"><span class="vico">💡</span><h4>Innovation</h4><p>Outils de calcul internes, machine learning, maquette numérique : la technologie au service du jugement de l'ingénieur.</p></div>
+          <div class="vcard"><span class="vico">🤝</span><h4>Indépendance</h4><p>Nous ne réalisons pas de travaux : nos recommandations ne servent que la justesse de l'ouvrage et l'intérêt de nos clients.</p></div>
+          <div class="vcard"><span class="vico">🌿</span><h4>Sobriété</h4><p>Dimensionner au plus juste, c'est consommer moins de matière et réduire l'empreinte carbone des ouvrages.</p></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -816,8 +824,25 @@ a{color:var(--green);text-decoration:none;}
   </div>
 </section>
 
+<!-- TECH -->
+<section class="sec" id="technologies">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="stag">Nos outils</div>
+      <h2>Des outils conçus en interne, du sol à la structure</h2>
+      <p>Nous développons nos propres outils de calcul. Conçus par nos ingénieurs, ils réunissent la géotechnique et le calcul de structures, et accompagnent chaque projet de bout en bout — des premières études à la livraison de l'ouvrage — sans rupture ni ressaisie.</p>
+    </div>
+    <div class="tech-grid tech-4 rev">
+      <div class="tcard"><span class="tico">🏗️</span><h4>Intégrer</h4><p>Le sol et la structure sont modélisés comme un seul système. L'interaction sol-structure n'est plus une vérification de fin d'étude : elle oriente la conception dès les premières esquisses.</p></div>
+      <div class="tcard"><span class="tico">🌱</span><h4>Optimiser</h4><p>Des méthodes d'apprentissage automatique (machine learning) explorent les variantes de conception et orientent vers la solution la plus juste. Moins de matière, des fondations mieux adaptées au sol, et une variante bas-carbone étudiée systématiquement.</p></div>
+      <div class="tcard"><span class="tico">🛡️</span><h4>Garantir</h4><p>Nos outils sont vérifiés cas par cas par rapport à des calculs de référence, et leur domaine d'emploi figure dans chaque note. Les calculs sont tracés, versionnés et reproductibles, des années après.</p></div>
+      <div class="tcard"><span class="tico">🧭</span><h4>Décider</h4><p>L'outil propose, l'ingénieur décide. Chaque étude est vérifiée, validée et signée par nos ingénieurs, qui gardent la maîtrise des hypothèses et du jugement.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- SERVICES -->
-<section class="sec" id="services">
+<section class="sec sec-alt" id="services">
   <div class="wrap">
     <div class="sh rev">
       <div class="stag">Nos prestations</div>
@@ -839,7 +864,7 @@ a{color:var(--green);text-decoration:none;}
 </section>
 
 <!-- PATHOLOGIE -->
-<section class="sec sec-alt" id="pathologie">
+<section class="sec" id="pathologie">
   <div class="wrap">
     <div class="sh-c rev">
       <div class="stag">Diagnostic et expertise</div>
@@ -858,7 +883,7 @@ a{color:var(--green);text-decoration:none;}
 </section>
 
 <!-- PROCESS -->
-<section class="sec" id="process">
+<section class="sec sec-alt" id="process">
   <div class="wrap">
     <div class="sh-c rev">
       <div class="stag">Notre méthode</div>
@@ -900,22 +925,43 @@ a{color:var(--green);text-decoration:none;}
   </div>
 </div>
 
-<!-- TECH -->
-<section class="sec sec-alt" id="technologies">
+<!-- MARCHÉS -->
+<section class="sec sec-alt" id="marches">
   <div class="wrap">
     <div class="sh rev">
-      <div class="stag">Nos outils</div>
-      <h2>Des outils conçus en interne, du sol à la structure</h2>
-      <p>Nous développons nos propres outils de calcul. Conçus par nos ingénieurs, ils réunissent la géotechnique et le calcul de structures, et accompagnent chaque projet de bout en bout — des premières études à la livraison de l'ouvrage — sans rupture ni ressaisie.</p>
+      <div class="stag">Secteurs d'activité</div>
+      <h2>Une même exigence, quel que soit l'ouvrage</h2>
+      <p>De la maison individuelle à l'ouvrage d'art, chaque projet repose sur le même principe : étudier le sol et l'ouvrage ensemble.</p>
     </div>
-    <div class="tech-grid tech-4 rev">
-      <div class="tcard"><span class="tico">🏗️</span><h4>Intégrer</h4><p>Le sol et la structure sont modélisés comme un seul système. L'interaction sol-structure n'est plus une vérification de fin d'étude : elle oriente la conception dès les premières esquisses.</p></div>
-      <div class="tcard"><span class="tico">🌱</span><h4>Optimiser</h4><p>Des méthodes d'apprentissage automatique (machine learning) explorent les variantes de conception et orientent vers la solution la plus juste. Moins de matière, des fondations mieux adaptées au sol, et une variante bas-carbone étudiée systématiquement.</p></div>
-      <div class="tcard"><span class="tico">🛡️</span><h4>Garantir</h4><p>Nos outils sont vérifiés cas par cas par rapport à des calculs de référence, et leur domaine d'emploi figure dans chaque note. Les calculs sont tracés, versionnés et reproductibles, des années après.</p></div>
-      <div class="tcard"><span class="tico">🧭</span><h4>Décider</h4><p>L'outil propose, l'ingénieur décide. Chaque étude est vérifiée, validée et signée par nos ingénieurs, qui gardent la maîtrise des hypothèses et du jugement.</p></div>
+    <div class="marches rev">
+      <div class="mcard"><span class="mico">🏠</span><h4>Résidentiel et collectif</h4><p>Maisons individuelles, immeubles collectifs, résidences, logements sociaux.</p></div>
+      <div class="mcard"><span class="mico">🏢</span><h4>Tertiaire et commercial</h4><p>Bureaux, hôtels, commerces, équipements publics.</p></div>
+      <div class="mcard"><span class="mico">🏭</span><h4>Industrie et logistique</h4><p>Entrepôts, sites industriels, plateformes logistiques, fondations d'équipements lourds.</p></div>
+      <div class="mcard"><span class="mico">🌉</span><h4>Infrastructures et ouvrages d'art</h4><p>Ponts et passerelles, murs de soutènement, ouvrages d'art courants.</p></div>
+      <div class="mcard"><span class="mico">💨</span><h4>Énergies renouvelables</h4><p>Fondations d'éoliennes, centrales photovoltaïques au sol, stockage d'énergie.</p></div>
+      <div class="mcard"><span class="mico">🏛️</span><h4>Bâti existant et réhabilitation</h4><p>Diagnostic, renforcement et reprise en sous-œuvre de bâtiments existants.</p></div>
     </div>
   </div>
 </section>
+
+<!-- INTL -->
+<div class="intl" id="international">
+  <div class="wrap">
+    <div class="intl-in">
+      <div>
+        <div class="stag">France et international</div>
+        <h2 style="color:#fff;">Ancrés en France, ouverts à l'international</h2>
+        <p>Nous travaillons selon les Eurocodes, leurs annexes nationales et les normes françaises, en tenant compte des exigences locales de chaque pays. La France est notre marché principal ; nous intervenons également en Europe, en Afrique et au Moyen-Orient.</p>
+      </div>
+      <div class="regions">
+        <div class="reg"><span class="rflag"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#0055A4"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#EF4135"/></svg></span><div class="rname">France métropolitaine et outre-mer</div><div class="rdesc">Marché principal. Géotechnique et calcul de structures selon les Eurocodes, leurs annexes nationales françaises et les normes françaises.</div></div>
+        <div class="reg"><span class="rflag"><svg viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#003399"/><g fill="#FFCC00"><circle cx="15" cy="4" r="0.9"/><circle cx="18" cy="4.8" r="0.9"/><circle cx="20.2" cy="7" r="0.9"/><circle cx="21" cy="10" r="0.9"/><circle cx="20.2" cy="13" r="0.9"/><circle cx="18" cy="15.2" r="0.9"/><circle cx="15" cy="16" r="0.9"/><circle cx="12" cy="15.2" r="0.9"/><circle cx="9.8" cy="13" r="0.9"/><circle cx="9" cy="10" r="0.9"/><circle cx="9.8" cy="7" r="0.9"/><circle cx="12" cy="4.8" r="0.9"/></g></svg></span><div class="rname">Europe</div><div class="rdesc">Belgique, Luxembourg, Suisse. Eurocodes et annexes nationales, en tenant compte des exigences locales.</div></div>
+        <div class="reg"><span class="rflag">🌍</span><div class="rname">Afrique</div><div class="rdesc">Algérie, Maroc, Tunisie, Côte d'Ivoire, Sénégal. Eurocodes, en tenant compte des exigences locales.</div></div>
+        <div class="reg"><span class="rflag">🌏</span><div class="rname">Moyen-Orient</div><div class="rdesc">Sur sollicitation, notamment pour des projets en zone sismique.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- BLOG -->
 <section class="sec" id="blog">
@@ -941,7 +987,7 @@ a{color:var(--green);text-decoration:none;}
 
 
 <!-- PROJETS -->
-<section class="sec" id="realisations">
+<section class="sec sec-alt" id="realisations">
   <div class="wrap">
     <div class="sh rev">
       <div class="stag">Étude de cas</div>
@@ -957,59 +1003,6 @@ a{color:var(--green);text-decoration:none;}
       </article>
     </div>
     <div id="projects-container" class="rev"></div>
-  </div>
-</section>
-
-<!-- INTL -->
-<div class="intl" id="international">
-  <div class="wrap">
-    <div class="intl-in">
-      <div>
-        <div class="stag">France et international</div>
-        <h2 style="color:#fff;">Ancrés en France, ouverts à l'international</h2>
-        <p>Nous travaillons selon les Eurocodes, leurs annexes nationales et les normes françaises, en tenant compte des exigences locales de chaque pays. La France est notre marché principal ; nous intervenons également en Europe, en Afrique et au Moyen-Orient.</p>
-      </div>
-      <div class="regions">
-        <div class="reg"><span class="rflag"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#0055A4"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#EF4135"/></svg></span><div class="rname">France métropolitaine et outre-mer</div><div class="rdesc">Marché principal. Géotechnique et calcul de structures selon les Eurocodes, leurs annexes nationales françaises et les normes françaises.</div></div>
-        <div class="reg"><span class="rflag"><svg viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#003399"/><g fill="#FFCC00"><circle cx="15" cy="4" r="0.9"/><circle cx="18" cy="4.8" r="0.9"/><circle cx="20.2" cy="7" r="0.9"/><circle cx="21" cy="10" r="0.9"/><circle cx="20.2" cy="13" r="0.9"/><circle cx="18" cy="15.2" r="0.9"/><circle cx="15" cy="16" r="0.9"/><circle cx="12" cy="15.2" r="0.9"/><circle cx="9.8" cy="13" r="0.9"/><circle cx="9" cy="10" r="0.9"/><circle cx="9.8" cy="7" r="0.9"/><circle cx="12" cy="4.8" r="0.9"/></g></svg></span><div class="rname">Europe</div><div class="rdesc">Belgique, Luxembourg, Suisse. Eurocodes et annexes nationales, en tenant compte des exigences locales.</div></div>
-        <div class="reg"><span class="rflag">🌍</span><div class="rname">Afrique</div><div class="rdesc">Algérie, Maroc, Tunisie, Côte d'Ivoire, Sénégal. Eurocodes, en tenant compte des exigences locales.</div></div>
-        <div class="reg"><span class="rflag">🌏</span><div class="rname">Moyen-Orient</div><div class="rdesc">Sur sollicitation, notamment pour des projets en zone sismique.</div></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section class="sec" id="about">
-  <div class="wrap">
-    <div class="about-in">
-      <div>
-        <div class="stag">Notre identité</div>
-        <h2 style="margin-bottom:20px;">Une ingénierie rigoureuse, sobre et indépendante</h2>
-        <p><strong>Ecologic Engineering</strong> est né d'une conviction : la maîtrise de l'interaction entre le sol et la structure est la clé de voûte d'un projet de construction réussi.</p>
-        <p>Nous pensons la géotechnique et la structure ensemble, dès la première esquisse. Cette approche se traduit par des économies mesurables, des ouvrages plus sûrs et des calculs que l'on peut retracer, des années après. Notre ambition : être pour nos clients un partenaire technique de confiance, exigeant et accessible.</p>
-        <p>Notre nom reflète notre double engagement : l'<strong style="color:var(--green);">écologie</strong> — construire durablement — et la <strong style="color:var(--green);">logique</strong> — la rigueur scientifique de l'ingénieur.</p>
-      </div>
-      <div>
-        <h4 style="margin-bottom:16px;font-size:16px;">Nos engagements</h4>
-        <div class="vals">
-          <div class="vcard"><span class="vico">🎯</span><h4>Rigueur</h4><p>Chaque calcul est vérifié, chaque hypothèse est tracée, chaque note est relue avant d'être signée.</p></div>
-          <div class="vcard"><span class="vico">💡</span><h4>Innovation</h4><p>Outils de calcul internes, machine learning, maquette numérique : la technologie au service du jugement de l'ingénieur.</p></div>
-          <div class="vcard"><span class="vico">🤝</span><h4>Indépendance</h4><p>Nous ne réalisons pas de travaux : nos recommandations ne servent que la justesse de l'ouvrage et l'intérêt de nos clients.</p></div>
-          <div class="vcard"><span class="vico">🌿</span><h4>Sobriété</h4><p>Dimensionner au plus juste, c'est consommer moins de matière et réduire l'empreinte carbone des ouvrages.</p></div>
-        </div>
-        <h4 style="margin-top:28px;margin-bottom:16px;font-size:16px;">Normes et référentiels</h4>
-        <div class="norms">
-          <div class="norm"><div class="norm-n">Eurocodes 0 à 9</div><div class="norm-d">NF EN 1990 à NF EN 1999</div></div>
-          <div class="norm"><div class="norm-n">NF P 94-500</div><div class="norm-d">Missions d'ingénierie géotechnique</div></div>
-          <div class="norm"><div class="norm-n">NF P 94-261 / 262</div><div class="norm-d">Fondations superficielles et profondes</div></div>
-          <div class="norm"><div class="norm-n">NF DTU</div><div class="norm-d">Règles de mise en œuvre</div></div>
-          <div class="norm"><div class="norm-n">ISO 19650</div><div class="norm-d">Gestion de l'information BIM</div></div>
-          <div class="norm"><div class="norm-n">Eurocode 8</div><div class="norm-d">Conception parasismique</div></div>
-          <div class="norm"><div class="norm-n">HQE / BREEAM</div><div class="norm-d">Certifications environnementales</div></div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1499,8 +1492,8 @@ document.addEventListener('keydown',function(e){
 
 // ══════════ SYSTÈME BILINGUE FR/EN ══════════
 const I18N=[
-['.nav a',[`Sectors`,`Expertise`,`Services`,`Publications`,`About`,`Contact →`]],
-['.mnav a',[`Sectors`,`Expertise`,`Services`,`Publications`,`About`,`Contact`]],
+['.nav a',[`About`,`Expertise`,`Services`,`Commitments`,`Sectors`,`Publications`,`Contact →`]],
+['.mnav a',[`About`,`Expertise`,`Services`,`Commitments`,`Sectors`,`Publications`,`Contact`]],
 ['.hero-badge',[`Geotechnics · Structures · Soil-structure interaction`,`<span class="hero-dot"></span>Opening soon`]],
 ['.hero h1',[`From soil to structure,<br>one single <em class="hero-grad">engineering</em>`]],
 ['.hero-p',[`An independent engineering firm in geotechnics and structural design. Two disciplines on an equal footing, one team, and one strength: making them work together. From the earliest stages, we inform your decisions for structures that are safe, lean and right-sized.`]],
@@ -1599,7 +1592,7 @@ const I18N=[
 `Algeria, Morocco, Tunisia, Côte d'Ivoire, Senegal. Eurocodes, taking local requirements into account.`,
 `On request, particularly for projects in seismic zones.`]],
 ['#contact-zones',[`France · Europe · Africa · Middle East`]],
-['#about .stag',[`Who we are`]],
+['#about .stag',[`Who we are`,`Our commitments`]],
 ['#about h2',[`Rigorous, lean and independent engineering`]],
 ['.about-in > div:first-child p',[
 `<strong>Ecologic Engineering</strong> was born from a conviction: mastering the interaction between ground and structure is the keystone of a successful construction project.`,
@@ -1629,9 +1622,6 @@ const I18N=[
 ['.fcol a',[`Residential and multi-unit`,`Offices and commercial`,`Industry and logistics`,`Infrastructure`,`Renewable energy`,`Geotechnics`,`Soil-structure interaction`,`Structural design`,`Diagnosis and pathology`,`Construction support and design review`,`Technical publications`,`🔗 LinkedIn`]],
 ['#f-type option',[`Individual`,`Company`]],
 ['#contact-devis',[`Free and without obligation`]],
-['.about-in > div:last-child > h4',[`Our commitments`,`Standards and codes`]],
-['.norm-n',[`Eurocodes 0 to 9`,`NF P 94-500`,`NF P 94-261 / 262`,`NF DTU`,`ISO 19650`,`Eurocode 8`,`HQE / BREEAM`]],
-['.norm-d',[`NF EN 1990 to NF EN 1999`,`Geotechnical engineering missions`,`Shallow and deep foundations`,`Execution rules`,`BIM information management`,`Seismic design`,`Environmental certification`]],
 ['.etag',[`Ground model`,`Foundations`,`Retaining works`,`Ground improvement`,`Reinforced concrete`,`Steel and composite`,`Timber`,`Seismic design`,`Coupled model`,`Differential settlements`,`Finite elements`,`Optimisation`,`BIM`,`In-house calculation tools`,`Low-carbon optimisation`,`Machine learning`]],
 ['#modal-article-iss .legal-box',[`<button class="legal-close" onclick="closeLegal('modal-article-iss')">✕</button>
 <h2>Soil-structure interaction: why foundations and superstructure should be designed together</h2>
